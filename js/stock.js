@@ -1,0 +1,17 @@
+let stockProductos = [
+    {id: 1, nombre: "Nike Signal",precio: 100, marca: "Nike", img: './img/nike-signal.jpg'},
+    {id: 2, nombre: "Air-Max 97",precio: 110, marca: "Nike", img: './img/air-max.jpg'},
+    {id: 3, nombre: "Air-Force 1",precio: 150, marca: "Nike", img: './img/air-force.jpg'},
+    {id: 4, nombre: "Jordan Legacy",precio: 200, marca: "Jordan", img: './img/jordan-legacy.jpg'},
+    {id: 5, nombre: "Adidas Ozelia",precio: 111, marca: "Adidas", img: './img/adidas-ozelia.jpg'},
+    {id: 6, nombre: "Adidas Superstar",precio: 120, marca: "Adidas", img: './img/adidas-superstar.jpg'},
+    {id: 7, nombre: "Adidas Forum",precio: 110, marca: "Adidas", img: './img/adidas-forum.jpg'},
+    {id: 8, nombre: "Converse Taylor",precio: 90, marca: "Converse", img: './img/converse-chuck-taylor.jpg'},
+    {id: 9, nombre: "Converse Rival",precio: 108, marca: "Converse", img: './img/converse-rival.jpg'},
+    {id: 10, nombre:"Converse All Star",precio: 130, marca: "Converse", img: './img/converse-allstar.jpg'},
+    {id: 11, nombre: "Puma X-ray 2",precio: 103, marca: "Puma", img: './img/puma-xray.jpg'},
+    {id: 12, nombre: "Puma Ferrari",precio: 110, marca: "Puma", img: './img/puma-ferrari.jpg'},
+    {id: 13, nombre: "Puma Future Rider",precio: 140, marca: "Puma", img: './img/puma-future.jpg'},
+    {id: 14, nombre: "Puma Cruise Rider",precio: 145, marca: "Puma", img: './img/puma-cruise.jpg'},
+    {id: 15, nombre: "Vans Ultra range",precio: 121, marca: "Vans", img: './img/vans-ultrarange.jpg'},
+]

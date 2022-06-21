@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneaker VAL - Tienda de zapatillas</title>
+    <script src="https://kit.fontawesome.com/df59baf6b8.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>Sneaker-Val</h1>
+
+        <input id="search" type="text" class="input" placeholder="Buscar zapatilla">
+
+        <button id="boton-carrito"><i class="fas fa-shopping-cart"></i><span id="contadorCarrito">0</span></button>
+    </header>
+
+
+    <div class="seleccion">
+        <select id="selecMarcas">
+            <option value="all">Zapatillas</option>
+            <option value="Nike">Nike</option>
+            <option value="Jordan">Jordan</option>
+            <option value="Adidas">Adidas</option>
+            <option value="Puma">Puma</option>
+            <option value="Converse">Converse</option>
+            <option value="Vans">Vans</option>
+        </select>
+    </div>
+
+    <main id="contenedor-productos">
+        <!-- <div class="producto">
+            <div class="card">
+                <div class="card-image">
+                    <img src="img/nike-signal.jpg">
+                    <span class="card-title">Nike Signal</span>
+                    <a id="boton" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add_shopping_cart</i></a>
+                </div>
+                <div class="card-content">
+                    <p>Marca: Nike</p>
+                    <p> $100</p>
+                </div>
+            </div> 
+        </div>  -->
+    </main>
+
+
+    <div class="modal-contenedor">
+        <div class="modal-carrito">
+            <h3>Carrito</h3>
+            <button id="carritoCerrar"><i class="fas fa-times-circle"></i></button>
+            <div id="carrito-contenedor">
+                <!-- <div class="productoEnCarrito">
+                    <p>Nike Signal</p>
+                    <p>Precio: $100</p>
+                    <button class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
+                </div>  -->
+            </div>
+            <p class="precioProducto">Precio total: $<span id="precioTotal">0</span></p>
+            <div id="terminar" style="display: flex; justify-content: flex-end;"></div>
+        </div>
+    </div>
+
+
+    <script src="js/stock.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
