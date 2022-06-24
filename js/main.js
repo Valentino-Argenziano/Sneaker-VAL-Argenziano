@@ -1,5 +1,6 @@
 let carritoDeCompras = []
 
+
 const contenedorProductos = document.getElementById('contenedor-productos');
 const contenedorCarrito = document.getElementById('carrito-contenedor');
 
@@ -11,6 +12,10 @@ const precioTotal = document.getElementById('precioTotal');
 
 const selecMarcas = document.getElementById('selecMarcas')
 const buscador = document.getElementById('search')
+
+window.addEventListener("DOMContentLoaded", () => {
+    ProductosCarrito()
+})
 
 
 
@@ -50,7 +55,7 @@ function mostrarProductos(array) {
 
         contenedorProductos.appendChild(div)
 
-        let btnAgregar  =document.getElementById(`boton${el.id}`)
+        let btnAgregar = document.getElementById(`boton${el.id}`)
 
         btnAgregar.addEventListener('click', () => {
             agregarAlCarrito(el.id);
@@ -65,58 +70,81 @@ function mostrarProductos(array) {
 
 function agregarAlCarrito(id) {
     let yaExiste = carritoDeCompras.find(elemento => elemento.id == id)
+    let dataStorage = JSON.parse(localStorage.getItem(id))
+    let productoAgregar = stockProductos.find(ele => ele.id === id)
 
-    if (yaExiste) {
-        yaExiste.cantidad = yaExiste.cantidad + 1
-        document.getElementById(`cantidad${yaExiste.id}`).innerHTML = `<p id="cantidad${yaExiste.id}">Cantidad: ${yaExiste.cantidad}</p>`
-        actualizarCarrito()
+    if (dataStorage) {
+        dataStorage.cantidad = dataStorage.cantidad + 1
+        dataStorage.precio = dataStorage.precio + productoAgregar.precio
+        localStorage.setItem(id, JSON.stringify(dataStorage))
+        ProductosCarrito()
     } else {
-        let productoAgregar = stockProductos.find(ele => ele.id === id)
         productoAgregar.cantidad = 1
-        carritoDeCompras.push(productoAgregar)
-        actualizarCarrito()
-        mostrarCarrito(productoAgregar)
+        localStorage.setItem(id, JSON.stringify(productoAgregar))
+        ProductosCarrito()
     }
-
 }
 
 
 
-function mostrarCarrito(productoAgregar) {
+const renderCard = () => {
+    let productosPanelVista = ''
 
-    let div = document.createElement('div')
-    div.classList.add('productoEnCarrito')
-    div.innerHTML = `<p>${productoAgregar.nombre}</p>
-                <p>Precio: $${productoAgregar.precio}</p>
-                <p id="cantidad${productoAgregar.id}">Cantidad: ${productoAgregar.cantidad}</p>
-                <button id="eliminar${productoAgregar.id}" class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>`
-    contenedorCarrito.appendChild(div)
+    carritoDeCompras.forEach(producto => {
+        {
+            productosPanelVista +=
 
-    let btnEliminar = document.getElementById(`eliminar${productoAgregar.id}`)
-    btnEliminar.addEventListener('click', () => {
-        if (productoAgregar.cantidad == 1) {
-            btnEliminar.parentElement.remove()
-            carritoDeCompras = carritoDeCompras.filter(item => item.id !== productoAgregar.id)
-            actualizarCarrito()
-        } else {
-            productoAgregar.cantidad = productoAgregar.cantidad - 1
-            document.getElementById(`cantidad${productoAgregar.id}`).innerHTML = `<p id="cantidad${productoAgregar.id}">Cantidad: ${productoAgregar.cantidad}</p>`
-            actualizarCarrito()
+                `<p>${producto.nombre}</p>
+                    <p>Precio: $${producto.precio}</p>
+                            <p id="cantidad${producto.id}">Cantidad: ${producto.cantidad}</p>
+                        <button  class="boton-eliminar"><i id="eliminar" data-id="${producto.id}" class="fas fa-trash-alt"></i></button>`
         }
-    })
+    });
+    contenedorCarrito.innerHTML = productosPanelVista
 }
 
+
+
+
+const ProductosCarrito = () => {
+    try {
+        carritoDeCompras.length = 0
+        for (let i = 0; i < localStorage.length; i++) {
+            let key = localStorage.key(i)
+            typeof JSON.parse(localStorage.getItem(key)) == 'object' && carritoDeCompras.push(JSON.parse(localStorage.getItem(key)))
+        }
+        renderCard()
+        actualizarCarrito()
+    } catch (err) {
+        console.error("Algo no salio como se esperaba", err)
+    }
+}
 
 
 
 function actualizarCarrito() {
     contadorCarrito.innerText = carritoDeCompras.reduce((acc, el) => acc + el.cantidad, 0)
     precioTotal.innerText = carritoDeCompras.reduce((acc, el) => acc + (el.precio * el.cantidad), 0)
-    let productoJson = JSON.stringify(stockProductos)
-    localStorage.setItem("Productos", productoJson)
 }
 
+contenedorCarrito.addEventListener("click", (e)=>{
+    if(e.target.id==="eliminar"){
+        borrarProducto(parseFloat(e.target.dataset.id))
+    }
+})
 
+function borrarProducto(id){
+    let dataStorage = JSON.parse(localStorage.getItem(id))
+    if(dataStorage.cantidad > 1){
+        dataStorage.cantidad = dataStorage.cantidad - 1
+        localStorage.setItem(id, JSON.stringify(dataStorage))
+        ProductosCarrito()
+    }else{
+        localStorage.removeItem(id)
+        ProductosCarrito()
+    }
+
+}
 
 
 
