@@ -69,7 +69,6 @@ function mostrarProductos(array) {
 
 
 function agregarAlCarrito(id) {
-    let yaExiste = carritoDeCompras.find(elemento => elemento.id == id)
     let dataStorage = JSON.parse(localStorage.getItem(id))
     let productoAgregar = stockProductos.find(ele => ele.id === id)
 
