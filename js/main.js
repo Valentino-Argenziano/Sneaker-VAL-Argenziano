@@ -50,7 +50,7 @@ function mostrarProductos(array) {
 
         contenedorProductos.appendChild(div)
 
-        let btnAgregar = document.getElementById(`boton${el.id}`)
+        let btnAgregar  =document.getElementById(`boton${el.id}`)
 
         btnAgregar.addEventListener('click', () => {
             agregarAlCarrito(el.id);
@@ -103,8 +103,6 @@ function mostrarCarrito(productoAgregar) {
             document.getElementById(`cantidad${productoAgregar.id}`).innerHTML = `<p id="cantidad${productoAgregar.id}">Cantidad: ${productoAgregar.cantidad}</p>`
             actualizarCarrito()
         }
-
-
     })
 }
 
@@ -114,7 +112,11 @@ function mostrarCarrito(productoAgregar) {
 function actualizarCarrito() {
     contadorCarrito.innerText = carritoDeCompras.reduce((acc, el) => acc + el.cantidad, 0)
     precioTotal.innerText = carritoDeCompras.reduce((acc, el) => acc + (el.precio * el.cantidad), 0)
+    let productoJson = JSON.stringify(stockProductos)
+    localStorage.setItem("Productos", productoJson)
 }
+
+
 
 
 
