@@ -38,27 +38,27 @@ function mostrarProductos(array) {
     contenedorProductos.innerHTML = ""
 
     for (const el of array) {
-
+        let {id, precio, marca, img, nombre} = el;
         let div = document.createElement('div')
         div.className = 'producto'
         div.innerHTML = ` <div class="card">
                                 <div class="card-image">
-                                    <img src="${el.img}">
-                                    <span class="card-title">${el.nombre}</span>
-                                    <a id="boton${el.id}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add_shopping_cart</i></a>
+                                    <img src="${img}">
+                                    <span class="card-title">${nombre}</span>
+                                    <a id="boton${id}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add_shopping_cart</i></a>
                                 </div>
                                 <div class="card-content">
-                                    <p>Marca: ${el.marca}</p>
-                                    <p> $ ${el.precio}</p>
+                                    <p>Marca: ${marca}</p>
+                                    <p> $ ${precio}</p>
                                 </div>
                             </div>`
 
         contenedorProductos.appendChild(div)
 
-        let btnAgregar = document.getElementById(`boton${el.id}`)
+        let btnAgregar = document.getElementById(`boton${id}`)
 
         btnAgregar.addEventListener('click', () => {
-            agregarAlCarrito(el.id);
+            agregarAlCarrito(id);
         })
 
     }
