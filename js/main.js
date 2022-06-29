@@ -90,13 +90,13 @@ const renderCard = () => {
     let productosPanelVista = ''
 
     carritoDeCompras.forEach(producto => {
-        {
+        { let{nombre, precio,id,cantidad} = producto;
             productosPanelVista +=
 
-                `<p>${producto.nombre}</p>
-                    <p>Precio: $${producto.precio}</p>
-                            <p id="cantidad${producto.id}">Cantidad: ${producto.cantidad}</p>
-                        <button  class="boton-eliminar"><i id="eliminar" data-id="${producto.id}" class="fas fa-trash-alt"></i></button>`
+                `<p>${nombre}</p>
+                    <p>Precio: $${precio}</p>
+                            <p id="cantidad${id}">Cantidad: ${cantidad}</p>
+                        <button  class="boton-eliminar"><i id="eliminar" data-id="${id}" class="fas fa-trash-alt"></i></button>`
         }
     });
     contenedorCarrito.innerHTML = productosPanelVista
