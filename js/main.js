@@ -14,9 +14,64 @@ const selecMarcas = document.getElementById('selecMarcas')
 const buscador = document.getElementById('search')
 
 window.addEventListener("DOMContentLoaded", () => {
+    mostrarProductos()
     ProductosCarrito()
 })
 
+const traerDatos = async () => {
+    let respuesta = await fetch('C:\Users\User\Desktop\ecommerce\js\datos.json',{
+        method:"GET",
+        mode:"cors",
+        headers:{
+            "Content-Type":"application/json"
+        }
+    })
+    return respuesta.json()
+}
+
+// const renderizarDom = async()=> {
+//     let productos = await traerDatos ()
+//     productos.forEach(producto => {
+//         {
+//             let {id, precio, marca, img, nombre} = producto;
+//             let div = document.createElement('div')
+//             div.className = 'producto'
+//             div.innerHTML = ` <div class="card">
+//                                     <div class="card-image">
+//                                         <img src="${img}">
+//                                         <span class="card-title">${nombre}</span>
+//                                         <a id="boton${id}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add_shopping_cart</i></a>
+//                                     </div>
+//                                     <div class="card-content">
+//                                         <p>Marca: ${marca}</p>
+//                                         <p> $ ${precio}</p>
+//                                     </div>
+//                                 </div>`
+
+//             contenedorProductos.appendChild(div)
+
+//             let btnAgregar = document.getElementById(`boton${id}`)
+
+//             btnAgregar.addEventListener('click', () => {
+//                 agregarAlCarrito(id);
+//                 Toastify({
+//                     text: "Agregado al carrito",
+//                     duration: 3000,
+//                     newWindow: true,
+//                     close: true,
+//                     gravity: "top", // `top` or `bottom`
+//                     position: "right", // `left`, `center` or `right`
+//                     stopOnFocus: true, // Prevents dismissing of toast on hover
+//                     style: {
+//                     background: "linear-gradient(to right, #ff3c00fd, #ff5500bf)",
+//                     },
+//                     onClick: function(){} // Callback after click
+//                 }).showToast();
+//             })
+
+//         }
+//     })
+// }
 
 
 selecMarcas.addEventListener('change', () => {
@@ -31,14 +86,15 @@ selecMarcas.addEventListener('change', () => {
 })
 
 
-mostrarProductos(stockProductos)
 
-function mostrarProductos(array) {
+// mostrarProductos(stockProductos)
 
+async function mostrarProductos() {
     contenedorProductos.innerHTML = ""
-
-    for (const el of array) {
-        let {id, precio, marca, img, nombre} = el;
+    let productos = await traerDatos ()
+    console.log(productos);
+    for (const el of productos) {
+        let { id, precio, marca, img, nombre } = el;
         let div = document.createElement('div')
         div.className = 'producto'
         div.innerHTML = ` <div class="card">
@@ -54,28 +110,17 @@ function mostrarProductos(array) {
                             </div>`
 
         contenedorProductos.appendChild(div)
-
         let btnAgregar = document.getElementById(`boton${id}`)
-
         btnAgregar.addEventListener('click', () => {
             agregarAlCarrito(id);
             Toastify({
                 text: "Agregado al carrito",
-                duration: 3000,
-                newWindow: true,
+                duration: 3000, newWindow: true,
                 close: true,
-                gravity: "top", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                style: {
-                background: "linear-gradient(to right, #ff3c00fd, #ff5500bf)",
-                },
-                onClick: function(){} // Callback after click
+                gravity: "top", // `top` or `bottom`                 position: "right", // `left`, `center` or `right`                 stopOnFocus: true, // Prevents dismissing of toast on hover                 style: {                 background: "linear-gradient(to right, #ff3c00fd, #ff5500bf)",                 },                 onClick: function(){} // Callback after click
             }).showToast();
         })
-
     }
-
 
 }
 
@@ -103,7 +148,8 @@ const renderCard = () => {
     let productosPanelVista = ''
 
     carritoDeCompras.forEach(producto => {
-        { let{nombre, precio,id,cantidad} = producto;
+        {
+            let { nombre, precio, id, cantidad } = producto;
             productosPanelVista +=
 
                 `<p>${nombre}</p>
@@ -139,19 +185,19 @@ function actualizarCarrito() {
     precioTotal.innerText = carritoDeCompras.reduce((acc, el) => acc + (el.precio * el.cantidad), 0)
 }
 
-contenedorCarrito.addEventListener("click", (e)=>{
-    if(e.target.id==="eliminar"){
+contenedorCarrito.addEventListener("click", (e) => {
+    if (e.target.id === "eliminar") {
         borrarProducto(parseFloat(e.target.dataset.id))
     }
 })
 
-function borrarProducto(id){
+function borrarProducto(id) {
     let dataStorage = JSON.parse(localStorage.getItem(id))
-    if(dataStorage.cantidad > 1){
+    if (dataStorage.cantidad > 1) {
         dataStorage.cantidad = dataStorage.cantidad - 1
         localStorage.setItem(id, JSON.stringify(dataStorage))
         ProductosCarrito()
-    }else{
+    } else {
         localStorage.removeItem(id)
         ProductosCarrito()
     }
