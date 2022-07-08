@@ -14,86 +14,41 @@ const selecMarcas = document.getElementById('selecMarcas')
 const buscador = document.getElementById('search')
 
 window.addEventListener("DOMContentLoaded", () => {
-    mostrarProductos()
+    productFetch()
     ProductosCarrito()
 })
 
 const traerDatos = async () => {
-    let respuesta = await fetch('C:\Users\User\Desktop\ecommerce\js\datos.json',{
-        method:"GET",
-        mode:"cors",
-        headers:{
-            "Content-Type":"application/json"
-        }
-    })
+    let respuesta = await fetch("../js/datos.json")
     return respuesta.json()
 }
 
-// const renderizarDom = async()=> {
-//     let productos = await traerDatos ()
-//     productos.forEach(producto => {
-//         {
-//             let {id, precio, marca, img, nombre} = producto;
-//             let div = document.createElement('div')
-//             div.className = 'producto'
-//             div.innerHTML = ` <div class="card">
-//                                     <div class="card-image">
-//                                         <img src="${img}">
-//                                         <span class="card-title">${nombre}</span>
-//                                         <a id="boton${id}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add_shopping_cart</i></a>
-//                                     </div>
-//                                     <div class="card-content">
-//                                         <p>Marca: ${marca}</p>
-//                                         <p> $ ${precio}</p>
-//                                     </div>
-//                                 </div>`
-
-//             contenedorProductos.appendChild(div)
-
-//             let btnAgregar = document.getElementById(`boton${id}`)
-
-//             btnAgregar.addEventListener('click', () => {
-//                 agregarAlCarrito(id);
-//                 Toastify({
-//                     text: "Agregado al carrito",
-//                     duration: 3000,
-//                     newWindow: true,
-//                     close: true,
-//                     gravity: "top", // `top` or `bottom`
-//                     position: "right", // `left`, `center` or `right`
-//                     stopOnFocus: true, // Prevents dismissing of toast on hover
-//                     style: {
-//                     background: "linear-gradient(to right, #ff3c00fd, #ff5500bf)",
-//                     },
-//                     onClick: function(){} // Callback after click
-//                 }).showToast();
-//             })
-
-//         }
-//     })
-// }
 
 
-selecMarcas.addEventListener('change', () => {
 
+selecMarcas.addEventListener('change', async () => {
+    let stockProductos = await traerDatos()
     if (selecMarcas.value == 'all') {
         mostrarProductos(stockProductos)
+        
     } else {
-        let arrayNuevo = stockProductos.filter(item => item.marca == selecMarcas.value)
+        let arrayNuevo = stockProductos.filter(item => item.marca == selecMarcas.value);
+
 
         mostrarProductos(arrayNuevo)
     }
 })
 
-
-
-// mostrarProductos(stockProductos)
-
-async function mostrarProductos() {
-    contenedorProductos.innerHTML = ""
+async function productFetch(){
     let productos = await traerDatos ()
-    console.log(productos);
-    for (const el of productos) {
+    mostrarProductos(productos);
+}
+
+
+
+async function mostrarProductos(array) {
+    contenedorProductos.innerHTML = ""
+    for (const el of array) {
         let { id, precio, marca, img, nombre } = el;
         let div = document.createElement('div')
         div.className = 'producto'
@@ -126,9 +81,10 @@ async function mostrarProductos() {
 
 
 
-function agregarAlCarrito(id) {
+async function agregarAlCarrito(id) {
     let dataStorage = JSON.parse(localStorage.getItem(id))
-    let productoAgregar = stockProductos.find(ele => ele.id === id)
+    let productos = await traerDatos()
+    let productoAgregar = productos.find(ele => ele.id === id)
 
     if (dataStorage) {
         dataStorage.cantidad = dataStorage.cantidad + 1
