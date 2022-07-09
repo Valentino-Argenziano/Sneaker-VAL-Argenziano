@@ -13,6 +13,8 @@ const precioTotal = document.getElementById('precioTotal');
 const selecMarcas = document.getElementById('selecMarcas')
 const buscador = document.getElementById('search')
 
+// const finalizarCompraBtn = document.getElementById('button-finish');
+
 window.addEventListener("DOMContentLoaded", () => {
     productFetch()
     ProductosCarrito()
@@ -98,6 +100,38 @@ async function agregarAlCarrito(id) {
     }
 }
 
+/*finalizarCompraBtn.addEventListener('click',finalizarCompra)
+
+function finalizarCompra(e){
+    e.preventDefault();
+
+    if(ProductosCarrito()===0){
+        Swal.fire({
+            type:"error",
+            title:"Oops...",
+            text:"No hay productos, selecciona alguno",
+            timer:"2000",
+            showConfirmButton:false
+        }).then(function(){
+            window.location = "index.html"
+        })
+    }
+}*/
+
+/*let btnFinalizar = document.getElementById('button-finish')
+btnFinalizar.addEventListener('click', () => {
+    if(ProductosCarrito()<0){
+        Swal.fire({
+            type:"error",
+            title:"Oops...",
+            text:"No hay productos, selecciona alguno",
+            timer:"2000",
+            showConfirmButton:false
+        }).then(function(){
+            window.location = "index.html"
+        })
+    }
+})*/
 
 
 const renderCard = () => {
