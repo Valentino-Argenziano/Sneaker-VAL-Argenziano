@@ -4,8 +4,6 @@ let carritoDeCompras = []
 const contenedorProductos = document.getElementById('contenedor-productos');
 const contenedorCarrito = document.getElementById('carrito-contenedor');
 
-const botonTerminar = document.getElementById('terminar')
-const finCompra = document.getElementById('fin-compra')
 
 const contadorCarrito = document.getElementById('contadorCarrito');
 const precioTotal = document.getElementById('precioTotal');
@@ -13,7 +11,7 @@ const precioTotal = document.getElementById('precioTotal');
 const selecMarcas = document.getElementById('selecMarcas')
 const buscador = document.getElementById('search')
 
-// const finalizarCompraBtn = document.getElementById('button-finish');
+const finalizarCompraBtn = document.getElementById('button-finish');
 
 window.addEventListener("DOMContentLoaded", () => {
     productFetch()
@@ -74,7 +72,7 @@ async function mostrarProductos(array) {
                 text: "Agregado al carrito",
                 duration: 3000, newWindow: true,
                 close: true,
-                gravity: "top", // `top` or `bottom`                 position: "right", // `left`, `center` or `right`                 stopOnFocus: true, // Prevents dismissing of toast on hover                 style: {                 background: "linear-gradient(to right, #ff3c00fd, #ff5500bf)",                 },                 onClick: function(){} // Callback after click
+                gravity: "top", 
             }).showToast();
         })
     }
@@ -100,38 +98,39 @@ async function agregarAlCarrito(id) {
     }
 }
 
-/*finalizarCompraBtn.addEventListener('click',finalizarCompra)
+finalizarCompraBtn.addEventListener('click',finalizarCompra)
 
 function finalizarCompra(e){
     e.preventDefault();
 
-    if(ProductosCarrito()===0){
+    if(carritoDeCompras.length===0){
         Swal.fire({
             type:"error",
             title:"Oops...",
-            text:"No hay productos, selecciona alguno",
-            timer:"2000",
+            text:"No hay productos, selecciona alguno!",
+            icon: "error",
+            timer:"3500",
+            width:"50%",
+            padding:"40px",
+            showConfirmButton:false
+        })
+    }else{
+        Swal.fire({
+            title:"Compra Exitosa!",
+            text:"Su compra ha sido finalizada, pronto le llegará el pedido.",
+            icon: "success",
+            timer:"3500",
+            width:"50%",
+            padding:"40px",
             showConfirmButton:false
         }).then(function(){
-            window.location = "index.html"
+            window.location="index.html"
+            localStorage.clear()
         })
     }
-}*/
+}
 
-/*let btnFinalizar = document.getElementById('button-finish')
-btnFinalizar.addEventListener('click', () => {
-    if(ProductosCarrito()<0){
-        Swal.fire({
-            type:"error",
-            title:"Oops...",
-            text:"No hay productos, selecciona alguno",
-            timer:"2000",
-            showConfirmButton:false
-        }).then(function(){
-            window.location = "index.html"
-        })
-    }
-})*/
+
 
 
 const renderCard = () => {
